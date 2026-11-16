@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Assessment — SpeakReady</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script defer src="../assets/js/layout.js"></script>
+    <script defer src="../assets/js/assessment.js"></script>
+</head>
+
+<body data-base="../" data-page="assessment"><a class="skip-link" href="#main-content">Skip to content</a>
+    <div id="site-header"></div>
+    <div class="app-frame">
+        <main id="main-content" class="main-content">
+            <div class="page-topline">
+                <div>
+                    <div class="breadcrumb">Learning space / Assessments</div>
+                    <h1 class="page-title">Knowledge check</h1>
+                    <p class="page-subtitle">Review practical strategies for preparing and delivering a spoken message.
+                    </p>
+                </div>
+            </div>
+            <div class="notice" style="margin-bottom:18px">This short quiz checks your understanding of the learning
+                materials. It is separate from the research questionnaire and does not measure or diagnose language
+                anxiety.</div>
+            <form id="quiz-form">
+                <div id="quiz-questions"></div><button class="button button-primary" type="submit">Submit answers
+                    →</button>
+            </form>
+            <section id="quiz-result" class="panel" hidden style="max-width:480px;margin-top:20px;text-align:center">
+                <div class="score-circle"><span id="score-value">0%</span></div>
+                <h2 id="score-heading">Assessment complete</h2>
+                <p id="score-message" class="panel-intro"></p><a class="button button-outline" href="progress.html">View
+                    my progress</a>
+            </section>
+            <div class="site-footer-app">Learn from each answer. Keep practicing.</div>
+        </main>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+
+</html>
