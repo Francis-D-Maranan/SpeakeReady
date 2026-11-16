@@ -4,66 +4,69 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#17243b">
     <title>Learning Resources — SpeakReady</title>
+    <script src="../assets/js/theme-init.js"></script>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <script defer src="../assets/js/i18n.js"></script>
     <script defer src="../assets/js/layout.js"></script>
 </head>
 
-<body data-base="../" data-page="resources"><a class="skip-link" href="#main-content">Skip to content</a>
+<body data-base="../" data-page="resources" data-title-key="resources.documentTitle"><a class="skip-link"
+        href="#main-content" data-i18n="common.skip">Skip to content</a>
     <div id="site-header"></div>
     <div class="app-frame">
         <main id="main-content" class="main-content">
             <div class="page-topline">
                 <div>
-                    <div class="breadcrumb">Learning space / Learning resources</div>
-                    <h1 class="page-title">Learning resources</h1>
-                    <p class="page-subtitle">Simple guides you can return to before or after a speaking activity.</p>
+                    <div class="breadcrumb" data-i18n="resources.breadcrumb">Learning space / Learning resources</div>
+                    <h1 class="page-title" data-i18n="resources.title">Learning resources</h1>
+                    <p class="page-subtitle" data-i18n="resources.subtitle">Simple guides you can return to before or
+                        after a speaking activity.</p>
                 </div>
             </div>
             <section class="resource-grid">
                 <article class="resource-card">
-                    <div class="resource-icon">✎</div>
-                    <h3>Prepare a short outline</h3>
-                    <p>Write your main idea, two supporting details, and one closing thought. Use the outline as a guide
-                        rather than memorizing every word.</p>
+                    <div class="resource-icon" aria-hidden="true">✎</div>
+                    <h3 data-i18n="resources.outlineTitle">Prepare a short outline</h3>
+                    <p data-i18n="resources.outlineText">Write your main idea, two supporting details, and one closing
+                        thought. Use the outline as a guide rather than memorizing every word.</p>
                 </article>
                 <article class="resource-card">
-                    <div class="resource-icon">◷</div>
-                    <h3>Use a comfortable pace</h3>
-                    <p>Speak slowly enough for listeners to follow. Short pauses are useful when you need time to
-                        organize your next thought.</p>
+                    <div class="resource-icon" aria-hidden="true">◷</div>
+                    <h3 data-i18n="resources.paceTitle">Use a comfortable pace</h3>
+                    <p data-i18n="resources.paceText">Speak slowly enough for listeners to follow. Short pauses are
+                        useful when you need time to organize your next thought.</p>
                 </article>
                 <article class="resource-card">
-                    <div class="resource-icon">◎</div>
-                    <h3>Make your message clear</h3>
-                    <p>State your point directly, explain unfamiliar ideas, and choose examples that match your
-                        audience.</p>
+                    <div class="resource-icon" aria-hidden="true">◎</div>
+                    <h3 data-i18n="resources.clearTitle">Make your message clear</h3>
+                    <p data-i18n="resources.clearText">State your point directly, explain unfamiliar ideas, and choose
+                        examples that match your audience.</p>
                 </article>
                 <article class="resource-card">
-                    <div class="resource-icon">♡</div>
-                    <h3>Respond kindly to mistakes</h3>
-                    <p>Notice what happened, continue when you can, and choose one specific thing to practice next time.
-                    </p>
+                    <div class="resource-icon" aria-hidden="true">♡</div>
+                    <h3 data-i18n="resources.mistakesTitle">Respond kindly to mistakes</h3>
+                    <p data-i18n="resources.mistakesText">Notice what happened, continue when you can, and choose one
+                        specific thing to practice next time.</p>
                 </article>
                 <article class="resource-card">
-                    <div class="resource-icon">↗</div>
-                    <h3>Connect with your listener</h3>
-                    <p>Think about what your listener needs to understand. Use relevant reasons and examples to support
-                        your message.</p>
+                    <div class="resource-icon" aria-hidden="true">↗</div>
+                    <h3 data-i18n="resources.listenerTitle">Connect with your listener</h3>
+                    <p data-i18n="resources.listenerText">Think about what your listener needs to understand. Use
+                        relevant reasons and examples to support your message.</p>
                 </article>
                 <article class="resource-card">
-                    <div class="resource-icon">☷</div>
-                    <h3>Reflect after practicing</h3>
-                    <p>Ask yourself what went well, what felt difficult, and what small change you want to try during
-                        your next practice session.</p>
+                    <div class="resource-icon" aria-hidden="true">☷</div>
+                    <h3 data-i18n="resources.reflectTitle">Reflect after practicing</h3>
+                    <p data-i18n="resources.reflectText">Ask yourself what went well, what felt difficult, and what
+                        small change you want to try during your next practice session.</p>
                 </article>
             </section>
-            <div class="callout"><strong>Research connection:</strong> SpeakReady is based on the study's focus on
-                language anxiety and speaking skills, including fluency, message clarity, and engaging listeners. The
-                research document also discusses social interaction, supportive learning environments, practice, and
-                constructive feedback. Consult the complete research paper's bibliography for the full publication
-                details of its cited works; this prototype does not invent missing reference information.</div>
-            <div class="site-footer-app">SpeakReady · Learning resources</div>
+            <div class="callout"><strong data-i18n="resources.researchTitle">Research connection:</strong> <span
+                    data-i18n="resources.researchText">SpeakReady is based on the study's focus on language anxiety and
+                    speaking skills.</span></div>
+            <div class="site-footer-app" data-i18n="resources.footer">SpeakReady · Learning resources</div>
         </main>
     </div>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>

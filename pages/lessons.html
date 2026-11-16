@@ -4,28 +4,35 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#17243b">
     <title>Learning Modules — SpeakReady</title>
+    <script src="../assets/js/theme-init.js"></script>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <script defer src="../assets/js/i18n.js"></script>
     <script defer src="../assets/js/layout.js"></script>
     <script defer src="../assets/data/modules.js"></script>
     <script defer src="../assets/js/lessons.js"></script>
 </head>
 
-<body data-base="../" data-page="lessons"><a class="skip-link" href="#main-content">Skip to content</a>
+<body data-base="../" data-page="lessons" data-title-key="lessons.documentTitle"><a class="skip-link"
+        href="#main-content" data-i18n="common.skip">Skip to content</a>
     <div id="site-header"></div>
     <div class="app-frame">
         <main id="main-content" class="main-content">
             <div class="page-topline">
                 <div>
-                    <div class="breadcrumb">Learning space / Learning modules</div>
-                    <h1 class="page-title">Learning modules</h1>
-                    <p class="page-subtitle">Explore the ideas and skills that support confident speaking.</p>
+                    <div class="breadcrumb" data-i18n="lessons.breadcrumb">Learning space / Learning modules</div>
+                    <h1 class="page-title" data-i18n="lessons.title">Learning modules</h1>
+                    <p class="page-subtitle" data-i18n="lessons.subtitle">Explore the ideas and skills that support
+                        confident speaking.</p>
                 </div>
             </div>
-            <section class="lesson-grid" id="lesson-grid" aria-label="All learning modules"></section>
-            <div class="callout"><strong>A reminder:</strong> These modules are designed for learning and practice. Move
-                at a pace that feels manageable, and treat each activity as an opportunity to improve.</div>
-            <div class="site-footer-app">SpeakReady · Learn at your own pace</div>
+            <section class="lesson-grid" id="lesson-grid" aria-label="All learning modules"
+                data-i18n-aria-label="lessons.aria"></section>
+            <div class="callout"><strong data-i18n="lessons.reminderTitle">A reminder:</strong> <span
+                    data-i18n="lessons.reminder">These modules are designed for learning and practice. Move at a pace
+                    that feels manageable, and treat each activity as an opportunity to improve.</span></div>
+            <div class="site-footer-app" data-i18n="lessons.footer">SpeakReady · Learn at your own pace</div>
         </main>
     </div>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>

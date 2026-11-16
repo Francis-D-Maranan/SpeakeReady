@@ -4,25 +4,30 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#17243b">
     <title>Lesson — SpeakReady</title>
+    <script src="../assets/js/theme-init.js"></script>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <script defer src="../assets/js/i18n.js"></script>
     <script defer src="../assets/js/layout.js"></script>
     <script defer src="../assets/data/modules.js"></script>
     <script defer src="../assets/js/lesson.js"></script>
 </head>
 
-<body data-base="../" data-page="lessons"><a class="skip-link" href="#main-content">Skip to content</a>
+<body data-base="../" data-page="lessons" data-title-key="lesson.documentTitle"><a class="skip-link"
+        href="#main-content" data-i18n="common.skip">Skip to content</a>
     <div id="site-header"></div>
     <div class="app-frame">
         <main id="main-content" class="main-content">
             <div class="page-topline">
-                <div class="breadcrumb"><a href="lessons.html">Learning modules</a> / Lesson</div><a class="text-link"
-                    href="lessons.html">← All modules</a>
+                <div class="breadcrumb"><a href="lessons.html" data-i18n="lesson.breadcrumb">Learning modules /
+                        Lesson</a></div><a class="text-link" href="lessons.html" data-i18n="lesson.allModules">← All
+                    modules</a>
             </div>
             <div id="lesson-detail" class="lesson-detail">
-                <p class="page-subtitle">Loading lesson…</p>
+                <p class="page-subtitle" data-i18n="lesson.loading">Loading lesson…</p>
             </div>
-            <div class="site-footer-app">SpeakReady · Learn at your own pace</div>
+            <div class="site-footer-app" data-i18n="lessons.footer">SpeakReady · Learn at your own pace</div>
         </main>
     </div>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>

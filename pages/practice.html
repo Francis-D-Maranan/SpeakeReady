@@ -4,95 +4,110 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#17243b">
     <title>Practice Studio — SpeakReady</title>
+    <script src="../assets/js/theme-init.js"></script>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <script defer src="../assets/js/i18n.js"></script>
     <script defer src="../assets/js/layout.js"></script>
     <script defer src="../assets/js/practice.js"></script>
 </head>
 
-<body data-base="../" data-page="practice"><a class="skip-link" href="#main-content">Skip to content</a>
+<body data-base="../" data-page="practice" data-title-key="practice.documentTitle"><a class="skip-link"
+        href="#main-content" data-i18n="common.skip">Skip to content</a>
     <div id="site-header"></div>
     <div class="app-frame">
         <main id="main-content" class="main-content">
             <div class="page-topline">
                 <div>
-                    <div class="breadcrumb">Learning space / Practice studio</div>
-                    <h1 class="page-title">Practice studio</h1>
-                    <p class="page-subtitle">Choose a prompt, prepare your ideas, and practice speaking out loud.</p>
+                    <div class="breadcrumb" data-i18n="practice.breadcrumb">Learning space / Practice studio</div>
+                    <h1 class="page-title" data-i18n="practice.title">Practice studio</h1>
+                    <p class="page-subtitle" data-i18n="practice.subtitle">Choose a prompt, prepare your ideas, and
+                        practice speaking out loud.</p>
                 </div>
             </div>
             <div class="practice-layout">
                 <section class="panel">
-                    <h2>Your speaking challenge</h2>
-                    <p class="panel-intro">Start with a topic that feels familiar. You can change the prompt at any
-                        time.</p>
+                    <h2 data-i18n="practice.challenge">Your speaking challenge</h2>
+                    <p class="panel-intro" data-i18n="practice.intro">Start with a topic that feels familiar. You can
+                        change the prompt at any time.</p>
                     <div class="field-row">
-                        <div class="field-group"><label class="form-label" for="practice-language">Practice
-                                language</label><select class="field" id="practice-language">
+                        <div class="field-group"><label class="form-label" for="practice-language"
+                                data-i18n="practice.language">Practice language</label><select class="field"
+                                id="practice-language">
                                 <option value="English">English</option>
                                 <option value="Filipino">Filipino</option>
                             </select></div>
-                        <div class="field-group"><label class="form-label" for="practice-topic">Choose a
-                                topic</label><select class="field" id="practice-topic">
-                                <option value="0">A skill I want to learn</option>
-                                <option value="1">A helpful school improvement</option>
-                                <option value="2">Why teamwork matters</option>
-                                <option value="3">A book, game, or story I enjoy</option>
-                                <option value="4">Using technology responsibly</option>
+                        <div class="field-group"><label class="form-label" for="practice-topic"
+                                data-i18n="practice.topic">Choose a topic</label><select class="field"
+                                id="practice-topic">
+                                <option value="0" data-i18n="practice.topic1">A skill I want to learn</option>
+                                <option value="1" data-i18n="practice.topic2">A helpful school improvement</option>
+                                <option value="2" data-i18n="practice.topic3">Why teamwork matters</option>
+                                <option value="3" data-i18n="practice.topic4">A book, game, or story I enjoy</option>
+                                <option value="4" data-i18n="practice.topic5">Using technology responsibly</option>
                             </select></div>
                     </div>
                     <div class="prompt-box">
-                        <div class="prompt-label">YOUR PROMPT</div>
+                        <div class="prompt-label" data-i18n="practice.promptLabel">YOUR PROMPT</div>
                         <p class="prompt-text" id="prompt-text">Talk about a skill you want to learn and explain why it
                             matters to you.</p>
                     </div>
                     <div class="field-row">
-                        <div class="field-group"><label class="form-label" for="prep-duration">Preparation
-                                time</label><select class="field" id="prep-duration">
-                                <option value="30">30 seconds</option>
-                                <option value="60" selected>1 minute</option>
-                                <option value="120">2 minutes</option>
+                        <div class="field-group"><label class="form-label" for="prep-duration"
+                                data-i18n="practice.prepDuration">Preparation time</label><select class="field"
+                                id="prep-duration">
+                                <option value="30" data-i18n="time.30">30 seconds</option>
+                                <option value="60" selected data-i18n="time.60">1 minute</option>
+                                <option value="120" data-i18n="time.120">2 minutes</option>
                             </select></div>
-                        <div class="field-group"><label class="form-label" for="speak-duration">Speaking
-                                time</label><select class="field" id="speak-duration">
-                                <option value="30">30 seconds</option>
-                                <option value="60" selected>1 minute</option>
-                                <option value="90">90 seconds</option>
-                                <option value="120">2 minutes</option>
+                        <div class="field-group"><label class="form-label" for="speak-duration"
+                                data-i18n="practice.speakDuration">Speaking time</label><select class="field"
+                                id="speak-duration">
+                                <option value="30" data-i18n="time.30">30 seconds</option>
+                                <option value="60" selected data-i18n="time.60">1 minute</option>
+                                <option value="90" data-i18n="time.90">90 seconds</option>
+                                <option value="120" data-i18n="time.120">2 minutes</option>
                             </select></div>
                     </div>
                     <div class="timer-display" id="timer-display" aria-live="off">01:00</div>
                     <div class="timer-caption" id="timer-caption">Preparation time</div>
-                    <div class="timer-controls"><button class="button button-primary" id="timer-start">Start
-                            preparation</button><button class="button button-outline" id="timer-reset">Reset</button>
-                    </div>
-                    <div class="practice-helper" style="margin-top:18px"><strong>Quick outline:</strong> Start with your
-                        main idea. Give two supporting details or examples. Finish with a short closing thought. Focus
-                        on communicating your message, not on being perfect.</div>
+                    <div class="timer-controls"><button class="button button-primary" id="timer-start"
+                            type="button">Start preparation</button><button class="button button-outline"
+                            id="timer-reset" type="button" data-i18n="common.reset">Reset</button></div>
+                    <div class="practice-helper" style="margin-top:18px"><strong data-i18n="practice.quickOutline">Quick
+                            outline:</strong> <span data-i18n="practice.quickOutlineText">Start with your main idea.
+                            Give two supporting details or examples. Finish with a short closing thought. Focus on
+                            communicating your message, not on being perfect.</span></div>
                 </section>
                 <aside class="panel">
-                    <h2>Optional voice recording</h2>
-                    <p class="panel-intro">Record a short practice attempt and listen to it afterward. Your recording
-                        stays in this page and is not uploaded.</p>
-                    <div class="notice" id="recording-notice">Microphone access is optional. Your browser will ask for
-                        permission before recording.</div>
-                    <div class="timer-controls" style="margin:16px 0"><button class="button button-outline"
-                            id="record-start">● Start recording</button><button class="button button-outline"
-                            id="record-stop" disabled>Stop</button></div><audio id="audio-playback" controls hidden
-                        style="width:100%"></audio>
+                    <h2 data-i18n="practice.recordTitle">Optional voice recording</h2>
+                    <p class="panel-intro" data-i18n="practice.recordIntro">Record a short practice attempt and listen
+                        to it afterward. Your recording stays in this page and is not uploaded.</p>
+                    <div class="notice" id="recording-notice" data-i18n="practice.micNotice">Microphone access is
+                        optional. Your browser will ask for permission before recording.</div>
+                    <div class="timer-controls recording-controls"><button class="button button-outline"
+                            id="record-start" type="button"><span aria-hidden="true">●</span> <span
+                                data-i18n="practice.startRecording">Start recording</span></button><button
+                            class="button button-outline" id="record-stop" type="button" disabled
+                            data-i18n="practice.stopRecording">Stop</button></div><audio id="audio-playback" controls
+                        hidden></audio>
                     <div id="recording-status" class="panel-intro" aria-live="polite"></div>
-                    <hr style="border:0;border-top:1px solid var(--line);margin:21px 0">
-                    <h2>After you speak</h2>
-                    <p class="panel-intro">Use this short reflection to notice what went well and what you want to
-                        practice next.</p>
-                    <div class="field-group"><label class="form-label" for="practice-reflection">What felt easy or
-                            difficult?</label><textarea class="field" rows="4" id="practice-reflection"
+                    <hr class="panel-divider">
+                    <h2 data-i18n="practice.afterSpeaking">After you speak</h2>
+                    <p class="panel-intro" data-i18n="practice.reflectIntro">Use this short reflection to notice what
+                        went well and what you want to practice next.</p>
+                    <div class="field-group"><label class="form-label" for="practice-reflection"
+                            data-i18n="practice.reflectionLabel">What felt easy or difficult?</label><textarea
+                            class="field" rows="4" id="practice-reflection"
+                            data-i18n-placeholder="practice.reflectionPlaceholder"
                             placeholder="I was able to explain my main idea. Next time, I want to…"></textarea></div>
-                    <button class="button button-primary" id="save-practice" style="width:100%">Complete practice
-                        session ✓</button>
+                    <button class="button button-primary button-full" id="save-practice" type="button"
+                        data-i18n="practice.complete">Complete practice session</button>
                 </aside>
             </div>
-            <div class="site-footer-app">Practice is personal. Go at a pace that works for you.</div>
+            <div class="site-footer-app" data-i18n="practice.footer">Practice is personal. Go at a pace that works for
+                you.</div>
         </main>
     </div>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>

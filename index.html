@@ -6,36 +6,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#17243b">
   <meta name="description"
-    content="SpeakReady is a guided digital learning module for speaking confidence and oral communication skills.">
+    content="SpeakReady is a guided digital learning module for speaking confidence and oral communication skills."
+    data-i18n-content="home.metaDescription">
   <title>SpeakReady — Build confidence, one conversation at a time</title>
+  <script src="assets/js/theme-init.js"></script>
   <link rel="stylesheet" href="assets/css/style.css">
+  <script defer src="assets/js/i18n.js"></script>
   <script defer src="assets/js/layout.js"></script>
   <script defer src="assets/js/home.js"></script>
 </head>
 
-<body data-base="./" data-page="home">
-  <a class="skip-link" href="#main-content">Skip to content</a>
+<body data-base="./" data-page="home" data-title-key="home.documentTitle">
+  <a class="skip-link" href="#main-content" data-i18n="common.skip">Skip to content</a>
   <div id="site-header"></div>
   <main id="main-content" class="home-main">
     <section class="hero-section wrap">
       <div class="hero-copy">
-        <span class="eyebrow"><span class="eyebrow-dot"></span> YOUR SPEAKING PRACTICE SPACE</span>
-        <h1>Find your voice.<br><span>Build your confidence.</span></h1>
-        <p class="hero-description">A supportive space to prepare your thoughts, practice speaking, and grow your oral
-          communication skills—one step at a time.</p>
+        <span class="eyebrow"><span class="eyebrow-dot"></span><span data-i18n="home.eyebrow">YOUR SPEAKING PRACTICE
+            SPACE</span></span>
+        <h1><span data-i18n="home.headlineA">Find your voice.</span><br><span data-i18n="home.headlineB">Build your
+            confidence.</span></h1>
+        <p class="hero-description" data-i18n="home.description">A supportive space to prepare your thoughts, practice
+          speaking, and grow your oral communication skills—one step at a time.</p>
         <div class="hero-actions">
-          <a class="button button-primary button-lg" href="pages/dashboard.html">Start learning <span
-              aria-hidden="true">→</span></a>
-          <a class="button button-quiet button-lg" href="pages/lessons.html">Explore lessons</a>
+          <a class="button button-primary button-lg" href="pages/dashboard.html"><span
+              data-i18n="home.startLearning">Start learning</span><span aria-hidden="true">→</span></a>
+          <a class="button button-quiet button-lg" href="pages/lessons.html" data-i18n="home.exploreLessons">Explore
+            lessons</a>
         </div>
-        <div class="hero-note"><span class="note-icon">✦</span><span>Practice at your own pace. Progress is saved on
-            this device.</span></div>
+        <div class="hero-note"><span class="note-icon" aria-hidden="true">✦</span><span data-i18n="home.note">Practice
+            at your own pace. Progress is saved on this device.</span></div>
       </div>
-      <div class="hero-art" aria-label="Illustration of a student speaking confidently">
+      <div class="hero-art" role="img" data-i18n-aria-label="home.illustrationLabel"
+        aria-label="Illustration of a student speaking confidently">
         <div class="art-orbit orbit-one"></div>
         <div class="art-orbit orbit-two"></div>
-        <div class="art-speech speech-one">I have an idea!</div>
-        <div class="art-speech speech-two">One step at a time.</div>
+        <div class="art-speech speech-one" data-i18n="home.speechOne">I have an idea!</div>
+        <div class="art-speech speech-two" data-i18n="home.speechTwo">One step at a time.</div>
         <div class="art-person">
           <div class="person-hair"></div>
           <div class="person-head">
@@ -46,47 +53,48 @@
           <div class="person-neck"></div>
           <div class="person-body"><span class="person-shirt-mark">S</span></div>
         </div>
-        <div class="art-spark spark-one">✦</div>
-        <div class="art-spark spark-two">✳</div>
-        <div class="art-spark spark-three">·</div>
+        <div class="art-spark spark-one" aria-hidden="true">✦</div>
+        <div class="art-spark spark-two" aria-hidden="true">✳</div>
+        <div class="art-spark spark-three" aria-hidden="true">·</div>
       </div>
     </section>
 
     <section class="value-section wrap" aria-labelledby="value-heading">
       <div class="section-heading centered-heading">
-        <span class="eyebrow">A PRACTICAL WAY TO PRACTICE</span>
-        <h2 id="value-heading">Small steps. Stronger speaking.</h2>
-        <p>Learn useful strategies, put them into practice, and reflect on what you can improve.</p>
+        <span class="eyebrow" data-i18n="home.valueEyebrow">A PRACTICAL WAY TO PRACTICE</span>
+        <h2 id="value-heading" data-i18n="home.valueTitle">Small steps. Stronger speaking.</h2>
+        <p data-i18n="home.valueDescription">Learn useful strategies, put them into practice, and reflect on what you
+          can improve.</p>
       </div>
       <div class="value-grid">
         <article class="value-card">
           <div class="value-icon icon-lavender">01</div>
-          <h3>Prepare your thoughts</h3>
-          <p>Use simple guides to organize ideas before speaking.</p>
+          <h3 data-i18n="home.prepareTitle">Prepare your thoughts</h3>
+          <p data-i18n="home.prepareText">Use simple guides to organize ideas before speaking.</p>
         </article>
         <article class="value-card">
           <div class="value-icon icon-mint">02</div>
-          <h3>Practice out loud</h3>
-          <p>Try prompts and short challenges in a low-pressure setting.</p>
+          <h3 data-i18n="home.practiceTitle">Practice out loud</h3>
+          <p data-i18n="home.practiceText">Try prompts and short challenges in a low-pressure setting.</p>
         </article>
         <article class="value-card">
           <div class="value-icon icon-peach">03</div>
-          <h3>Reflect and improve</h3>
-          <p>Check your fluency, clarity, and ability to engage listeners.</p>
+          <h3 data-i18n="home.reflectTitle">Reflect and improve</h3>
+          <p data-i18n="home.reflectText">Check your fluency, clarity, and ability to engage listeners.</p>
         </article>
       </div>
     </section>
 
     <section class="home-cta wrap">
-      <div><span class="eyebrow eyebrow-light">READY WHEN YOU ARE</span>
-        <h2>Your next speaking step starts here.</h2>
-        <p>No competition. No pressure to be perfect. Just a place to practice.</p>
+      <div><span class="eyebrow eyebrow-light" data-i18n="home.ctaEyebrow">READY WHEN YOU ARE</span>
+        <h2 data-i18n="home.ctaTitle">Your next speaking step starts here.</h2>
+        <p data-i18n="home.ctaText">No competition. No pressure to be perfect. Just a place to practice.</p>
       </div>
-      <a class="button button-light button-lg" href="pages/dashboard.html">Go to my learning space <span
-          aria-hidden="true">→</span></a>
+      <a class="button button-light button-lg" href="pages/dashboard.html"><span data-i18n="home.goLearning">Go to my
+          learning space</span><span aria-hidden="true">→</span></a>
     </section>
-    <footer class="site-footer wrap"><span>© <span data-year></span> SpeakReady</span><span>Learn · Practice ·
-        Reflect</span></footer>
+    <footer class="site-footer wrap"><span>© <span data-year></span> SpeakReady</span><span
+        data-i18n="home.footer">Learn · Practice · Reflect</span></footer>
   </main>
 </body>
 

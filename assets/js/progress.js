@@ -1,65 +1,101 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const S = window.SpeakReady,
-    mods = window.SR_MODULES || [],
-    done = S.get(S.keys.completed, []),
-    quiz = S.get(S.keys.quiz, null),
-    sessions = S.get(S.keys.practice, []);
-  document.getElementById("progress-fraction").textContent =
-    `${done.length} / ${mods.length}`;
-  document.getElementById("overall-progress").style.width =
-    `${(done.length / mods.length) * 100}%`;
-  document.getElementById("progress-copy").textContent =
-    done.length === mods.length
-      ? "You have completed all six learning modules."
-      : `${mods.length - done.length} module${mods.length - done.length === 1 ? "" : "s"} remaining.`;
-  document.getElementById("progress-quiz").textContent = quiz
-    ? `${quiz.score}%`
-    : "—";
-  document.getElementById("quiz-detail").textContent = quiz
-    ? `${quiz.correct} of ${quiz.total} correct · ${new Date(quiz.date).toLocaleDateString()}`
-    : "No assessment completed yet.";
-  document.getElementById("module-progress-list").innerHTML = mods
-    .map(
-      (m) =>
-        `<div class="progress-module-row"><div><strong>${m.title}</strong><small>Module ${String(m.id).padStart(2, "0")} · ${m.duration}</small></div><span class="status-pill ${done.includes(m.id) ? "done" : ""}">${done.includes(m.id) ? "Completed" : "Not completed"}</span></div>`,
-    )
-    .join("");
-  document.getElementById("practice-count").textContent = sessions.length
-    ? `${sessions.length} practice session${sessions.length === 1 ? "" : "s"} recorded.`
-    : "No practice sessions recorded yet.";
-  document.getElementById("practice-list").innerHTML =
-    sessions
-      .slice(-5)
-      .reverse()
-      .map(
-        (s) =>
-          `<div class="progress-module-row"><div><strong>${s.topic || "Speaking practice"}</strong><small>${s.language || ""} · ${new Date(s.date).toLocaleString()}</small>${s.reflection ? `<small>Reflection: ${escapeHtml(s.reflection)}</small>` : ""}</div><span class="status-pill done">Saved</span></div>`,
-      )
-      .join("") ||
-    '<p class="panel-intro">Your completed practice sessions will appear here.</p>';
-  function escapeHtml(t) {
-    return String(t).replace(
+  const I = window.SR_I18N,
+    S = window.SpeakReady,
+    modules = window.SR_MODULES || [];
+  if (!I || !S) return;
+  const escapeHtml = (value) =>
+    String(value).replace(
       /[&<>"']/g,
-      (c) =>
+      (char) =>
         ({
           "&": "&amp;",
           "<": "&lt;",
           ">": "&gt;",
           '"': "&quot;",
           "'": "&#39;",
-        })[c],
+        })[char],
     );
+
+  function render() {
+    const T = I.t,
+      lang = I.language,
+      locale = lang === "fil" ? "fil-PH" : "en-US";
+    const completed = S.get(S.keys.completed, []);
+    const quiz = S.get(S.keys.quiz, null);
+    const sessions = S.get(S.keys.practice, []);
+    const percent = modules.length
+      ? (completed.length / modules.length) * 100
+      : 0;
+    document.getElementById("progress-fraction").textContent =
+      `${completed.length} / ${modules.length}`;
+    document.getElementById("overall-progress").style.width = `${percent}%`;
+    document.getElementById("progress-copy").textContent =
+      completed.length === modules.length
+        ? T("progress.allDone")
+        : `${modules.length - completed.length} ${T(modules.length - completed.length === 1 ? "progress.remainingOne" : "progress.remainingMany")}`;
+    document.getElementById("progress-quiz").textContent = quiz
+      ? `${quiz.score}%`
+      : "—";
+    document.getElementById("quiz-detail").textContent = quiz
+      ? T("progress.quizDetail", {
+          correct: quiz.correct,
+          total: quiz.total,
+          date: new Intl.DateTimeFormat(locale).format(new Date(quiz.date)),
+        })
+      : T("common.noQuiz");
+    document.getElementById("module-progress-list").innerHTML = modules
+      .map((module) => {
+        const m = module[lang],
+          done = completed.includes(module.id);
+        return `<div class="progress-module-row"><div><strong>${escapeHtml(m.title)}</strong><small>${T("common.module")} ${String(module.id).padStart(2, "0")} · ${escapeHtml(m.duration)}</small></div><span class="status-pill ${done ? "done" : ""}">${T(done ? "common.completed" : "common.notCompleted")}</span></div>`;
+      })
+      .join("");
+    document.getElementById("practice-count").textContent = sessions.length
+      ? T(
+          sessions.length === 1
+            ? "progress.practiceCountOne"
+            : "progress.practiceCountMany",
+          { count: sessions.length },
+        )
+      : T("progress.noPractice");
+    document.getElementById("practice-list").innerHTML =
+      sessions
+        .slice(-5)
+        .reverse()
+        .map((session) => {
+          const topicName = Number.isInteger(session.topicId)
+            ? session.language === "Filipino"
+              ? [
+                  ["Kasanayang nais kong matutuhan"],
+                  ["Pagpapabuting makatutulong sa paaralan"],
+                  ["Bakit mahalaga ang pagtutulungan"],
+                  ["Aklat, laro, o kuwentong kinagigiliwan ko"],
+                  ["Responsableng paggamit ng teknolohiya"],
+                ][session.topicId]?.[0]
+              : [
+                  ["A skill I want to learn"],
+                  ["A helpful school improvement"],
+                  ["Why teamwork matters"],
+                  ["A book, game, or story I enjoy"],
+                  ["Using technology responsibly"],
+                ][session.topicId]?.[0]
+            : session.topic || T("practice.title");
+          const date = new Intl.DateTimeFormat(locale, {
+            dateStyle: "medium",
+            timeStyle: "short",
+          }).format(new Date(session.date));
+          return `<div class="progress-module-row"><div><strong>${escapeHtml(topicName || T("practice.title"))}</strong><small>${escapeHtml(session.language || "")} · ${date}</small>${session.reflection ? `<small>${T("common.reflection")}: ${escapeHtml(session.reflection)}</small>` : ""}</div><span class="status-pill done">${T("common.saved")}</span></div>`;
+        })
+        .join("") || `<p class="panel-intro">${T("common.noSessions")}</p>`;
   }
+  render();
+  document.addEventListener("sr:languagechange", render);
   document.getElementById("reset-progress").addEventListener("click", () => {
-    if (
-      confirm(
-        "Reset lessons, quiz results, and practice history saved in this browser?",
-      )
-    ) {
+    if (confirm(I.t("common.confirmReset"))) {
       [S.keys.completed, S.keys.quiz, S.keys.practice, S.keys.ratings].forEach(
-        (k) => localStorage.removeItem(k),
+        (key) => localStorage.removeItem(key),
       );
-      S.toast("Local progress has been reset.");
+      S.toast(I.t("common.progressReset"));
       setTimeout(() => location.reload(), 400);
     }
   });

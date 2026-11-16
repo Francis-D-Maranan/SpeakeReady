@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const S = window.SpeakReady;
-  if (!S) return;
+  const S = window.SpeakReady,
+    I = window.SR_I18N;
+  if (!S || !I) return;
+  const T = (key) => I.t(key);
   const prompts = [
     [
       "Talk about a skill you want to learn and explain why it matters to you.",
@@ -23,41 +25,90 @@ document.addEventListener("DOMContentLoaded", () => {
       "Paano magagamit nang responsable ng mga mag-aaral ang teknolohiya sa pag-aaral? Magbigay ng dalawang halimbawa.",
     ],
   ];
-  const topic = document.getElementById("practice-topic"),
-    language = document.getElementById("practice-language"),
-    prompt = document.getElementById("prompt-text");
+  const topicNames = [
+    ["A skill I want to learn", "Kasanayang nais kong matutuhan"],
+    ["A helpful school improvement", "Pagpapabuting makatutulong sa paaralan"],
+    ["Why teamwork matters", "Bakit mahalaga ang pagtutulungan"],
+    [
+      "A book, game, or story I enjoy",
+      "Aklat, laro, o kuwentong kinagigiliwan ko",
+    ],
+    ["Using technology responsibly", "Responsableng paggamit ng teknolohiya"],
+  ];
+  const topic = document.getElementById("practice-topic");
+  const language = document.getElementById("practice-language");
+  const prompt = document.getElementById("prompt-text");
+  const prep = document.getElementById("prep-duration");
+  const speak = document.getElementById("speak-duration");
+  const display = document.getElementById("timer-display");
+  const caption = document.getElementById("timer-caption");
+  const start = document.getElementById("timer-start");
+  let remain = Number(prep.value),
+    interval = null,
+    mode = "prep",
+    paused = false;
+
+  // The activity language is an independent choice; it is preserved when UI language changes.
+  language.value = I.language === "fil" ? "Filipino" : "English";
+  let practiceLanguageChosenManually = false;
   function updatePrompt() {
-    prompt.textContent =
-      prompts[Number(topic.value)][language.value === "English" ? 0 : 1];
+    const languageIndex = language.value === "English" ? 0 : 1;
+    prompt.textContent = prompts[Number(topic.value)][languageIndex];
+    [...topic.options].forEach((option, index) => {
+      option.textContent = topicNames[index][I.language === "fil" ? 1 : 0];
+    });
   }
   topic.addEventListener("change", updatePrompt);
-  language.addEventListener("change", updatePrompt);
-  const prep = document.getElementById("prep-duration"),
-    speak = document.getElementById("speak-duration"),
-    display = document.getElementById("timer-display"),
-    caption = document.getElementById("timer-caption"),
-    start = document.getElementById("timer-start");
-  let remain = 60,
-    interval = null,
-    mode = "prep";
-  function fmt(n) {
-    return `${String(Math.floor(n / 60)).padStart(2, "0")}:${String(n % 60).padStart(2, "0")}`;
+  language.addEventListener("change", () => {
+    practiceLanguageChosenManually = true;
+    updatePrompt();
+  });
+  updatePrompt();
+
+  function fmt(seconds) {
+    return `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
   }
-  function setMode(m) {
-    mode = m;
-    remain = Number(m === "prep" ? prep.value : speak.value);
+  function setMode(nextMode) {
+    mode = nextMode;
+    remain = Number(mode === "prep" ? prep.value : speak.value);
     display.textContent = fmt(remain);
-    caption.textContent = m === "prep" ? "Preparation time" : "Speaking time";
-    start.textContent =
-      m === "prep" ? "Start preparation" : "Start speaking timer";
+    caption.textContent = T(
+      mode === "prep" ? "common.prepTime" : "common.speakingTime",
+    );
+    start.textContent = T(
+      mode === "prep" ? "common.startPrep" : "common.startSpeaking",
+    );
+    paused = false;
   }
   function stopTimer() {
     clearInterval(interval);
     interval = null;
     start.disabled = false;
   }
+  function onTimerComplete() {
+    stopTimer();
+    const completedMode = mode;
+    caption.textContent = T(
+      completedMode === "prep"
+        ? "common.prepComplete"
+        : "common.speakingComplete",
+    );
+    if (completedMode === "prep") {
+      mode = "speak";
+      start.textContent = T("common.startSpeaking");
+    } else {
+      start.textContent = T("common.startAgain");
+    }
+    S.toast(
+      T(
+        completedMode === "prep"
+          ? "common.prepDoneToast"
+          : "common.speakingDoneToast",
+      ),
+    );
+  }
   prep.addEventListener("change", () => {
-    if (!interval) setMode("prep");
+    if (!interval && mode === "prep") setMode("prep");
   });
   speak.addEventListener("change", () => {
     if (!interval && mode === "speak") setMode("speak");
@@ -65,27 +116,17 @@ document.addEventListener("DOMContentLoaded", () => {
   start.addEventListener("click", () => {
     if (interval) {
       stopTimer();
-      start.textContent = "Resume timer";
+      paused = true;
+      start.textContent = T("common.resume");
       return;
     }
+    if (remain <= 0) setMode(mode);
     start.disabled = false;
-    start.textContent = "Pause timer";
+    start.textContent = T("common.pause");
     interval = setInterval(() => {
-      remain--;
+      remain -= 1;
       display.textContent = fmt(remain);
-      if (remain <= 0) {
-        stopTimer();
-        caption.textContent =
-          mode === "prep" ? "Preparation complete" : "Speaking time complete";
-        start.textContent =
-          mode === "prep" ? "Start speaking timer" : "Start again";
-        if (mode === "prep") setMode("speak");
-        S.toast(
-          mode === "prep"
-            ? "Preparation time is complete."
-            : "Speaking timer complete.",
-        );
-      }
+      if (remain <= 0) onTimerComplete();
     }, 1000);
   });
   document.getElementById("timer-reset").addEventListener("click", () => {
@@ -93,26 +134,26 @@ document.addEventListener("DOMContentLoaded", () => {
     setMode("prep");
   });
   setMode("prep");
+
   let recorder = null,
     chunks = [],
     audioUrl = null;
-  const recStart = document.getElementById("record-start"),
-    recStop = document.getElementById("record-stop"),
-    audio = document.getElementById("audio-playback"),
-    status = document.getElementById("recording-status"),
-    notice = document.getElementById("recording-notice");
+  const recStart = document.getElementById("record-start");
+  const recStop = document.getElementById("record-stop");
+  const audio = document.getElementById("audio-playback");
+  const status = document.getElementById("recording-status");
+  const notice = document.getElementById("recording-notice");
   if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
     recStart.disabled = true;
-    notice.textContent =
-      "Voice recording is not supported in this browser or context. You can still complete the speaking activity without recording.";
+    notice.textContent = T("practice.recordUnsupported");
   }
   recStart.addEventListener("click", async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       chunks = [];
       recorder = new MediaRecorder(stream);
-      recorder.ondataavailable = (e) => {
-        if (e.data.size) chunks.push(e.data);
+      recorder.ondataavailable = (event) => {
+        if (event.data.size) chunks.push(event.data);
       };
       recorder.onstop = () => {
         const blob = new Blob(chunks, {
@@ -122,17 +163,15 @@ document.addEventListener("DOMContentLoaded", () => {
         audioUrl = URL.createObjectURL(blob);
         audio.src = audioUrl;
         audio.hidden = false;
-        stream.getTracks().forEach((t) => t.stop());
-        status.textContent =
-          "Recording ready. Use the player to listen to your practice.";
+        stream.getTracks().forEach((track) => track.stop());
+        status.textContent = T("practice.recordReady");
       };
       recorder.start();
       recStart.disabled = true;
       recStop.disabled = false;
-      status.textContent = "Recording… speak clearly and take your time.";
-    } catch (err) {
-      status.textContent =
-        "Microphone access was not granted or is unavailable. You can continue without recording.";
+      status.textContent = T("practice.recording");
+    } catch (_) {
+      status.textContent = T("practice.recordDenied");
     }
   });
   recStop.addEventListener("click", () => {
@@ -144,16 +183,41 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   document.getElementById("save-practice").addEventListener("click", () => {
     stopTimer();
-    const list = S.get(S.keys.practice, []);
-    list.push({
+    const sessions = S.get(S.keys.practice, []);
+    sessions.push({
       date: new Date().toISOString(),
-      topic: topic.options[topic.selectedIndex].text,
+      topicId: Number(topic.value),
+      topic:
+        topicNames[Number(topic.value)][language.value === "English" ? 0 : 1],
       language: language.value,
       reflection: document.getElementById("practice-reflection").value.trim(),
     });
-    S.set(S.keys.practice, list);
-    S.toast("Practice session saved on this device.");
+    S.set(S.keys.practice, sessions);
+    S.toast(T("common.practiceSaved"));
     document.getElementById("practice-reflection").value = "";
+  });
+  document.addEventListener("sr:languagechange", () => {
+    I.apply(document);
+    if (!practiceLanguageChosenManually)
+      language.value = I.language === "fil" ? "Filipino" : "English";
+    updatePrompt();
+    caption.textContent = T(
+      mode === "prep" ? "common.prepTime" : "common.speakingTime",
+    );
+    start.textContent = T(
+      interval
+        ? "common.pause"
+        : paused
+          ? "common.resume"
+          : mode === "prep"
+            ? "common.startPrep"
+            : "common.startSpeaking",
+    );
+    if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder)
+      notice.textContent = T("practice.recordUnsupported");
+    if (recorder?.state === "recording")
+      status.textContent = T("practice.recording");
+    else if (audio.src) status.textContent = T("practice.recordReady");
   });
   window.addEventListener("beforeunload", () => {
     if (audioUrl) URL.revokeObjectURL(audioUrl);
